@@ -1,3 +1,3 @@
-= Create a new DUBB tag function =
+= Create a new DUBB style tag function =
 
 Need some content :).
