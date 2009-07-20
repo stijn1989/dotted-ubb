@@ -1,3 +1,3 @@
-== Create a new DUBB style tag ==
+= Create a new DUBB style tag =
 
 Need some content :)
