@@ -1,6 +1,6 @@
 <?php
 /**
- * De interface van een DUBB_Tag
+ * The DUBB_Tag interface to create styletags.
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.0

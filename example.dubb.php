@@ -3,9 +3,12 @@
 include_once 'DUBB.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	DUBB::registerTags(array('b' , 'i' , 'h1' , 'url' => 2 , 'color' => 1));
+    $t = microtime(true);
+	DUBB::registerTags(array('b' , 'i' , 'url' => 2 , 'color' => 1 , 'size' => 1));
 	$dubb = new DUBB($_POST['text']);
 	echo $dubb->render();
+    echo '<hr>';
+    echo 'DUBB parse time: ' . round((microtime(true) - $t) , 3) . ' seconds';
 } else {
 ?>
 <form method="post">

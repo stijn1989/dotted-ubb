@@ -2,7 +2,7 @@
 include_once 'Tag' . DIRECTORY_SEPARATOR . 'Function.php';
 
 /**
- * Deze tag kleurt een woord of woorden.
+ * Color the text. You can use hex, rgb(...) or colornames
  *
  * @DUBB_Param 	$color
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Laad de DUBB tag class(es) voor het renderen.
+ * Load the DUBB tag class(es) when registering them.
  *
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.0
@@ -13,89 +13,103 @@ function __autoload($class)
 
 
 /**
- * Stel de included_path in
+ * Setup the include path to find the tag classes.
  */
 set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR . 'DUBB' . DIRECTORY_SEPARATOR);
 
 
 /**
- * Dotted UBB, kortweg DUBB, is een nieuwe, snelle en handige manier om teksten te stijlen.
- * De schrijfwijze is uniek en enig in zijn soort in de IT wereld.
- * Een (groep) woord(en) kan je een stijl of meerdere stijlen geven op de volgende manier:
+ * <h1>Dotted UBB</h1>
  *
- * 		woord.{b}
+ * Dotted UBB, short DUBB, is a new and fast way to style your text.
+ * The usability is unique and has never been used before.
+ * An introduction:
  *
- * Na het woord dat je een stijl geeft, staat een punt (dot) en tussen de accolades de stijl
- * dat je wilt geven aan het woord. Hier wordt het woord dus vetjes gedrukt.
- * Als je meerdere stijlen wilt gebruiken, kan je dit doen door ze te scheiden met komma's.
+ *      [The quick.{i} brown.{color('brown')} fox jumps over the lazy dog].{b, size('3')}
  *
- * 		woord.{b , i}
+ * The render will give the follow output on your screen.
  *
- * In dit voorbeeld wordt het woord vetjes en cursief gedrukt.
- * Als je een link wilt maken van een woord, moet je een URL opgeven.
- * Dit wordt opgelost door de stijl als een soort van functie te maken.
- * Eigenlijk zijn alle stijlen functies maar sommige hebben geen parameters zoals de bold stijl.
- * Een URL heeft één parameter en ziet er als volgt uit.
+ *      <h3><strong>The <em>quick</em> <span style="color: brown;">brown</span> fox jumps over the lazy dog</strong></h3>
  *
- * 		woord.{url('http://www.google.com')}
+ * <h2>Features</h2>
  *
- * De stijl is url en tussen de haakjes en ENKELE quotes staat de parameter.
- * Meerdere parameters worden gescheiden met komma's.
- * Je kan ook stijlen en stijlfuncties door elkaar gebruiken, er is geen volgorde aan verbonden.
+ * You can style a (group) word(s) like the follow example:
  *
- * Als je meerdere worden wilt stijlen, moet je ze groeperen tot een woordgroep.
- * Aan die woordgroep ken je dan op dezelfde manier, met het puntje en accolades, de stijl(en) toe.
- * Een woordgroep vorm je door rond de woorden vierkante haakjes, [ ], te plaatsen.
+ * 		word.{b}
  *
- * 		[dit is mijn woordgroep].{b , url('http://www.google.com' , 'Google zoekmachine!') , i}
+ * If you want to style a single word, you put a dot after the word and then write braces.
+ * Between the braces you put your style or styles.
+ * You can divide multiple styles with a comma.
  *
- * De woorden "dit is mijn woordgroep" krijgt een link naar google.com met title attribuut 'Google zoekmachine!'
- * en wordt vetjes en cursief afgedrukt.
+ * 		word.{b , i}
  *
- * Je kan ook meerdere lijnen groeperen en stijlen met DUBB tags.
+ * In the example above the word will be printed bold and italic.
+ * If you want add a special style, example creating a link of the word.
+ * You have to have some parameters like an URL address or more.
+ * This is called a styletag function. You write the name of the styletag function and between
+ * the parentheses you give the parameter(s).
+ * Next is an example of a style function.
+ *
+ * 		word.{url('http://www.google.com')}
+ *
+ * NOTICE: parameters are single quotes and not double!
+ * If you have to pass more then one parameter, you can divide them by a comma.
+ * You can use normal styletags (b, i, ...) and styletag functions on the same word without any order.
+ *
+ * If you want to style more then one word, you can group the words between square brackets.
+ * After the ] bracket you put the dot and the style(s) between the braces.
+ *
+ * 		[This is my first wordgroup].{b , url('http://www.google.com' , 'Google websearch!') , i}
+ *
+ * The words "This is my first wordgroup" will be an URL to google.com with a title attribute.
+ * The group of words will also be printed bold and italic.
+ *
+ * Since version 1.1 you can group multiple lines together.
  *
  * 		[foo
  * 		bar
  * 		baz].{b}
  *
- * Zo kan je makkelijk hele lijnen teksten gaan groeperen.
- * Daarnaast kan je ook DUBB tags gaan nesten in elkaar, bijvoorbeeld:
+ * If you have large text to style, maybe to make your introduction bold, you can group it and style it.
+ * You can also nest styletags, like follow example:
  *
  * 		[foo bar.{b} baz]{i}
  *
- * "foo bar baz" wordt schuin gedrukt en "bar" wordt daarbij nog eens cursief gedrukt.
- * Je kan ook geneste groeperingen maken, een voorbeeldje
+ * "foo bar baz" is italic and "bar" bold.
+ * Je can also nest group in group, see follow example:
  *
  * 		[Blandit crisare, facilisi autem feugiat suscipit illum feugiat eum, ut illum. 
  *      Esse magna [te facilisi erat delenit et. Commodo in vel eros te in.].{b}
  *      Nulla eu nonummy velit vel in, amet vulputate et eros tation nostrud vero, in aliquip amet, in facilisi feugait eu et. 
  *      Qui vero eu blandit delenit facilisi magna consequat illum, ullamcorper tation.].{i}
  *
- * Zo wordt in de twee zin een stukje vetjes gedrukt, terwijl de hele paragraaf schuingedrukt wordt.
+ * The whole section is printed italic and the second sentence is also printed bold.
  *
+ * 
+ * <h2>How to use in you PHP script(s)?</h2>
  *
- * Voor je de methode DUBB#render() aanroept, kan je DUBB stijl tags registreren.
- * Als je geen tags registreert, wordt er niets gerendert. Enkel de geregistreerde worden gerendert.
- * Tags registreer je met de statische functie DUBB#registerTag().
+ * Before you can render text, you have to tell the DUBB class which styletags you want to use.
+ * You can register the styletags with the function DUBB::registerTag($tag).
+ * If you don't register any styletags, you're text will be plain and boring.
  *
  * 		DUBB::registerTag('b')
  *
- * Als je stijl tag een stijlfunctie is, wat dus parameters heeft, kan je een tweede parameter meegeven
- * aan de functie. De tweede parameter is het aantal parameters de stijlfunctie heeft.
+ * If you want to register a styletag function, you need a second parameter for the registerTag($tag) function.
+ * The second parameter tells DUBB how many parameters the function needs.
  *
  * 		DUBB::registerTag('url' , 2);
  *
- * Je kan ook een array meegeven aan de functie DUBB#registerTags().
+ * If you want to register more then one styletags, you can use the function registerTags(array $tags).
+ * See follow example:
  *
  * 		DUBB::registerTags( array('b' , 'url' => 2) );
  *
+ * The function DUBB#render() will render the string you passed to the constructor.
+ * It gives the styled string back. You can print it or save it or eat it. 
+ * I don't care as long it renders I'm happy.
  *
- * De functie DUBB#render() gaat de string van het DUBB object renderen met alle geregistreerde stijltags.
- * Deze geeft dan de string terug met de stijlen toegepast. Je kan die string dan in je code echoën, 
- * sturen naar je output kanaal of eender wat mee doen.
  *
- *
- * Een voorbeeld van hoe je deze code kan gebruiken.
+ * Here you can see a small example, enjoy!
  *
  * 		<code>
  * 		<?php
@@ -108,7 +122,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  *
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
- * @version	1.2
+ * @version	1.3
  * @package DUBB
  */
 class DUBB
@@ -123,7 +137,7 @@ class DUBB
 	
 
 	/**
-	 * Maak een DUBB object aan.
+	 * Create a new DUBB instance.
 	 *
 	 * @param 	string 	$string
 	 */
@@ -134,19 +148,23 @@ class DUBB
 	
 	
 	/**
-	 * Registreer een DUBB tag.
+	 * Register a DUBB styletag.
 	 *
 	 * @param 	string 	$tag
 	 * @param 	int 	$params 	optional
+     * @throws  DUBB_Exception
 	 */
 	public static function registerTag($tag , $params = 0)
 	{
+        if(! class_exists(self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag)))
+            throw new DUBB_Exception("The class " . self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag) . " could not be found!");
+        
 		self::$_tags[$tag] = $params;
 	}
 	
 	
 	/**
-	 * Registeer een array van DUBB tags.
+	 * Register multiple DUBB styletags.
 	 *
 	 * @param 	array 	$tags
 	 */
@@ -162,36 +180,39 @@ class DUBB
 	
 	
 	/**
-	 * Render de string met de DUBB tags.
+	 * Render the string, DUBB style!
 	 *
 	 * @return 	string
 	 */
 	public function render()
 	{
-        //vervang alle woorden.{b} in [woorden].{b}
+        //replace all words.{b} in [words].{b}
         $this->_string = preg_replace("~(\w+)\.\{(.*?)\}~" , "[\\1].{\\2}" , $this->_string);
         
         /**
-         * Hier gebeurt het renderen. Iedere [...].{...} wordt gerendert.
+         * It happens here. Every [...].{...} will be rendert.
          *
-         * $results[0] het gedeelte dat gematched is.
-         * $results[1] bevat de string die gestijlt moet worden zonder [].
-         * $results[2] de tags zonder accolade.
+         * $results[0] contains the matched part.
+         * $results[1] contains the string that has to be styled without the square brackets.
+         * $results[2] contains the tags without the braces.
          */
         while(preg_match("~\[([^\[]*?)\]\.\{(.*?)\}~" , $this->_string , $results)) {
             $str = $results[1];
             $tags = $results[2];
             
-            //bewerk de tags voor verdere bewerkingen
+            //edit tags for rendering
             $tags = preg_replace("~\s*,\s*~" , "," , $tags);
             $tags = preg_replace("~\',\'~" , "':;:'" , $tags);
             
-            //stijl de string met iedere tag in $tags
-            foreach(explode(',' , $tags) as $tag) {
+            //style the string with every tag in DUBB::$_tags.
+            $tagList = explode(',' , $tags);
+            foreach($tagList as $tag) {
                 if(! $this->_isValidTag($tag)) continue;
                 if($functionInfo = $this->_isTagFunction($tag)) {
-                    $class = self::DUBB_TAG_CLASS_PREFIX . ucfirst($functionInfo['tag']);
-                    $obj = new $class($functionInfo['params']);
+                    $tag = &$functionInfo['tag'];
+                    $class = self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag);
+                    $params = &$functionInfo['params'];
+                    $obj = new $class($params);
                     $str = $obj->render($str);
                 } else {
                     $class = self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag);
@@ -200,8 +221,9 @@ class DUBB
                 }
             }
             
-            //replace de gestijlde $str in $this->_string
-            $this->_string = str_replace($results[0] , $str , $this->_string);
+            //replace the styled $str in $this->_string
+            $search = &$results[0];
+            $this->_string = str_replace($search , $str , $this->_string);
         }
 		
 		return $this->_string;
@@ -209,7 +231,7 @@ class DUBB
 	
 	
 	/**
-	 * Controleert of een tag geldig is. Dus het moet geregistreerd zijn en zijn klasse moet included zijn.
+     * Check if the tag is a registered styletag.
 	 *
 	 * @param 	string 	$tag
 	 * @return 	boolean
@@ -221,7 +243,7 @@ class DUBB
 		$split = preg_split("~\(~" , $tag);
 		$tag = $split[0];
 
-		if(array_key_exists($tag , self::$_tags) && class_exists(self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag))) {
+		if(array_key_exists($tag , self::$_tags)) {
 			$valid = true;
 		}
 		
@@ -229,16 +251,17 @@ class DUBB
 	}
 	
 	/**
-	 * Kijkt of de tag een stijlfunctie is of niet.
+     * Checks if the styletag is a styletag or a styletag function.
 	 *
 	 * @param 	string 	$_tag
-	 * @return 	boolean
+	 * @return 	boolean|array
 	 */
 	protected function _isTagFunction($_tag)
 	{
 		foreach(self::$_tags as $tag => $amountArguments) {
 			if($amountArguments > 0 && preg_match("~$tag\((.*?)\)~" , $_tag , $results)) {
-				return array('tag' => $tag , 'params' => explode(':;:' , $results[1]));
+                $paramsString = &$results[1];
+				return array('tag' => $tag , 'params' => explode(':;:' , $paramsString));
 			}
 		}
 		
