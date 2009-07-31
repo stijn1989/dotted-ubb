@@ -2,7 +2,7 @@
 include_once 'Tag.php';
 
 /**
- * Deze tag maakt alles vetgedrukt.
+ * Make the text bold.
  *
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.0

@@ -2,7 +2,7 @@
 include_once 'Tag' . DIRECTORY_SEPARATOR . 'Function.php';
 
 /**
- * Deze tag maakt een link.
+ * Create a link.
  *
  * @DUBB_Param 	$href
  * @DUBB_Param 	$title

@@ -2,7 +2,7 @@
 include_once 'Tag.php';
 
 /**
- * De klasse voor DUBB stijlfuncties.
+ * The class to create styletag functions (child of DUBB_Tag).
  *
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.0
@@ -16,7 +16,7 @@ abstract class DUBB_Tag_Function implements DUBB_Tag
 
 	
 	/**
-	 * Maak een nieuwe stijlfunctie aan met parameters.
+     * Create a new styletag function with parameters.
 	 *
 	 * @param 	array 	$params
 	 */
@@ -24,9 +24,16 @@ abstract class DUBB_Tag_Function implements DUBB_Tag
 	{
 		$this->_params = $this->removeParamQuotes($params);
 	}
+    
+    
+    /**
+     * Make the parameters write-once, read-many.
+     */
+    private function __set($name , $value){}
+    
 	
 	/**
-	 * Verwijder de enkele quotes rondom de parameters.
+	 * Remove the single quotes from the parameters.
 	 *
 	 * @param 	array 	$params
 	 * @return 	string

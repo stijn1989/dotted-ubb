@@ -1,6 +1,6 @@
 <?php
 /**
- * De exception class.
+ * The exception class.
  *
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.0
