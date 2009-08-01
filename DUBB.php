@@ -111,14 +111,12 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  *
  * Here you can see a small example, enjoy!
  *
- * 		<code>
  * 		<?php
  * 		DUBB::registerTags(array('b' , 'i' , 'color' => 1));
  *		$string = "blaat.{b} - [foo bar].{i, color('red')} :)";
  *		$dubb = new DUBB($string);
  * 		echo $dubb->render();
  * 		?>
- * 		</code>
  *
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
