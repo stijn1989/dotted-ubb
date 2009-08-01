@@ -13,7 +13,7 @@ _note: if you want to create a styletag function, read the next wikipage!_
 [/home/stijn/dubb/]$ touch DUBB/Tag/Underline.php
 }}}
 
-2) Edit the PHP file and we need to include the Tag interface first. Use _include\_once to include the interface. You can just copy/paste the code below.
+2) Edit the PHP file and we need to include the Tag interface first. You can just copy/paste the code below.
 
 {{{
 <?php
