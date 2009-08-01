@@ -107,17 +107,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  * The function DUBB#render() will render the string you passed to the constructor.
  * It gives the styled string back. You can print it or save it or eat it. 
  * I don't care as long it renders I'm happy.
- *
- *
- * Here you can see a small example, enjoy!
- *
- * 		<?php
- * 		DUBB::registerTags(array('b' , 'i' , 'color' => 1));
- *		$string = "blaat.{b} - [foo bar].{i, color('red')} :)";
- *		$dubb = new DUBB($string);
- * 		echo $dubb->render();
- * 		?>
- *
+ * 
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
  * @version	1.3
