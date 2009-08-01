@@ -20,10 +20,10 @@ _note: if you want to create a styletag function, read the next wikipage!_
 include_once 'Tag.php';
 }}}
 
-3) Now we write the styletag class code. The classname is the same as the filename and don't forget to implement the interface.
+3) Now we write the styletag class code. The classname is the same as the filename (DUBB_Tag_ as classprefix) and don't forget to implement the interface.
 
 {{{
-class Underline implements Tag
+class DUBB_Tag_Underline implements DUBB_Tag
 {
 
 }
@@ -50,7 +50,7 @@ DUBB::registerTag('underline');
 <?php
 include_once 'Tag.php';
 
-class Underline implements Tag
+class DUBB_Tag_Underline implements DUBB_Tag
 {
 
     public function render($text)
