@@ -228,12 +228,6 @@ class DUBB
 	{
 		return array_key_exists($tag , self::$_tags) && self::$_tags[$tag] == $amountParams;
 	}
-    
-    
-    private function _paramReplacer( array $results )
-    {
-           // echo '<pre>' , var_dump($results) , '</pre>';
-    }
 
 
 }
