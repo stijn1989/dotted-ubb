@@ -12,7 +12,7 @@ abstract class DUBB_Tag_Function implements DUBB_Tag
 {
 
 
-	protected $_params = array();
+	private $_params = array();
 
 	
 	/**
@@ -30,6 +30,15 @@ abstract class DUBB_Tag_Function implements DUBB_Tag
      * Make the parameters write-once, read-many.
      */
     private function __set($name , $value){}
+    
+    
+    /**
+     * Make the params readable
+     */
+    public function __get($name)
+    {
+        return $this->$name;
+    }
     
 	
 	/**

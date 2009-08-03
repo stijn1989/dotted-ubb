@@ -13,8 +13,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <form method="post">
 <textarea cols="65" rows="20" name="text">
-blalbla [hallo jij].{b} daar.{b , i} in [deze.{b} gekke.{size('1')} 
-wereld].{i, color('#f00')} met [de mooie].{url('http://www.google.com' , 'Google zoekmachine') , b} bomen
+blalbla [hallo jij].{b} daar.{b , i} in [deze.{b} gekke.{size(1)} 
+wereld].{i, color(#f00)} met [de mooie].{url(http://www.google.com , Google zoekmachine) , b} bomen
 </textarea>
 <div><input type="submit" value="Render it!" /></div>
 </form>
