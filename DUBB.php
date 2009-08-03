@@ -50,16 +50,15 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  * the parentheses you give the parameter(s).
  * Next is an example of a style function.
  *
- * 		word.{url('http://www.google.com')}
+ * 		word.{url(http://www.google.com)}
  *
- * NOTICE: parameters are single quotes and not double!
  * If you have to pass more then one parameter, you can divide them by a comma.
  * You can use normal styletags (b, i, ...) and styletag functions on the same word without any order.
  *
  * If you want to style more then one word, you can group the words between square brackets.
  * After the ] bracket you put the dot and the style(s) between the braces.
  *
- * 		[This is my first wordgroup].{b , url('http://www.google.com' , 'Google websearch!') , i}
+ * 		[This is my first wordgroup].{b , url(http://www.google.com , Google websearch!) , i}
  *
  * The words "This is my first wordgroup" will be an URL to google.com with a title attribute.
  * The group of words will also be printed bold and italic.
@@ -113,14 +112,14 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  *
  * 		<code>
  * 		DUBB::registerTags(array('b' , 'i' , 'color' => 1));
- *		$string = "blaat.{b} - [foo bar].{i, color('red')} :)";
+ *		$string = "blaat.{b} - [foo bar].{i, color(red)} :)";
  *		$dubb = new DUBB($string);
  * 		echo $dubb->render();
  * 		</code>
  *
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
- * @version	1.3
+ * @version	1.4
  * @package DUBB
  */
 class DUBB
@@ -148,6 +147,7 @@ class DUBB
 	/**
 	 * Register a DUBB styletag.
 	 *
+	 * @static
 	 * @param 	string 	$tag
 	 * @param 	int 	$params 	optional
      * @throws  DUBB_Exception
@@ -164,6 +164,7 @@ class DUBB
 	/**
 	 * Register multiple DUBB styletags.
 	 *
+	 * @static
 	 * @param 	array 	$tags
 	 */
 	public static function registerTags(array $tags)
@@ -186,7 +187,7 @@ class DUBB
 	{
         //replace all words.{b} in [words].{b}
         $this->_string = preg_replace("~(\w+)\.\{(.*?)\}~" , "[\\1].{\\2}" , $this->_string);
-        
+		
         /**
          * It happens here. Every [...].{...} will be rendert.
          *
@@ -196,32 +197,19 @@ class DUBB
          */
         while(preg_match("~\[([^\[]*?)\]\.\{(.*?)\}~" , $this->_string , $results)) {
             $str = $results[1];
-            $tags = $results[2];
             
-            //edit tags for rendering
-            $tags = preg_replace("~\s*,\s*~" , "," , $tags);
-            $tags = preg_replace("~\',\'~" , "':;:'" , $tags);
-            
-            //style the string with every tag in DUBB::$_tags.
-            $tagList = explode(',' , $tags);
-            foreach($tagList as $tag) {
-                if(! $this->_isValidTag($tag)) continue;
-                if($functionInfo = $this->_isTagFunction($tag)) {
-                    $tag = &$functionInfo['tag'];
-                    $class = self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag);
-                    $params = &$functionInfo['params'];
-                    $obj = new $class($params);
-                    $str = $obj->render($str);
-                } else {
-                    $class = self::DUBB_TAG_CLASS_PREFIX . ucfirst($tag);
-                    $obj = new $class;
-                    $str = $obj->render($str);
-                }
-            }
+            //build the style tag list
+			$tagList = new DUBB_Render_TagList($results[2]);
+			
+			//now render every tag in $tagList on the string
+			$iterator = $tagList->getTagListIterator();
+			while($iterator->valid()) {
+				$str = $iterator->current()->render($str);
+				$iterator->next();
+			}
             
             //replace the styled $str in $this->_string
-            $search = &$results[0];
-            $this->_string = str_replace($search , $str , $this->_string);
+            $this->_string = str_replace($results[0] , $str , $this->_string);
         }
 		
 		return $this->_string;
@@ -231,40 +219,21 @@ class DUBB
 	/**
      * Check if the tag is a registered styletag.
 	 *
+	 * @static
 	 * @param 	string 	$tag
+	 * @param 	int 	$amountParams
 	 * @return 	boolean
 	 */
-	protected function _isValidTag($tag)
+	public static function isRegisteredTag($tag , $amountParams)
 	{
-		$valid = false;
-		
-		$split = preg_split("~\(~" , $tag);
-		$tag = $split[0];
-
-		if(array_key_exists($tag , self::$_tags)) {
-			$valid = true;
-		}
-		
-		return $valid;
+		return array_key_exists($tag , self::$_tags) && self::$_tags[$tag] == $amountParams;
 	}
-	
-	/**
-     * Checks if the styletag is a styletag or a styletag function.
-	 *
-	 * @param 	string 	$_tag
-	 * @return 	boolean|array
-	 */
-	protected function _isTagFunction($_tag)
-	{
-		foreach(self::$_tags as $tag => $amountArguments) {
-			if($amountArguments > 0 && preg_match("~$tag\((.*?)\)~" , $_tag , $results)) {
-                $paramsString = &$results[1];
-				return array('tag' => $tag , 'params' => explode(':;:' , $paramsString));
-			}
-		}
-		
-		return false;
-	}
+    
+    
+    private function _paramReplacer( array $results )
+    {
+           // echo '<pre>' , var_dump($results) , '</pre>';
+    }
 
 
 }
