@@ -18,9 +18,15 @@ DUBB::registerTag('list' , array(1 , 2));
 
 || *ul* || *ol* ||
 || none || none ||
-|| circle || ||
-|| disc || ||
-|| square || ||
+|| circle || decimal ||
+|| disc || decimal-leading-zero ||
+|| square || georgian ||
+|| || lower-alpha ||
+|| || lower-greek ||
+|| || lower-latin ||
+|| || upper-alpha ||
+|| || upper-latin ||
+|| || upper-roman ||
 
 For example:
 
