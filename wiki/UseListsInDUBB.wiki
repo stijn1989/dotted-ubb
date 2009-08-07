@@ -1,4 +1,3 @@
-#labels Featured
 = How to use a (un)ordered list in DUBB =
 
 To use lists in DUBB you need to be sure you have the file ~List.php~ in the _Tag_ directory. It's in DUBB since version 1.4.1.
@@ -37,8 +36,8 @@ For example:
 
 This create the follow output:
 
-* list item 1
-* list item 2
- # sub item 1
- # sub item 2
-* list item 3
+ * list item 1
+ * list item 2
+  # sub item 1
+  # sub item 2
+ * list item 3
