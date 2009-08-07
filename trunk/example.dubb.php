@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo 'DUBB parse time: ' . round((microtime(true) - $t) , 3) . ' seconds';
 } else {
 ?>
-<form method="post">
+<form method="post" action="">
 <textarea cols="65" rows="20" name="text">
 blalbla [hallo jij].{b} daar.{b , i} in [deze.{b} gekke.{size(1)} 
 wereld].{i, color(#f00)} met [de mooie].{url(http://www.google.com , Google zoekmachine) , b} bomen
