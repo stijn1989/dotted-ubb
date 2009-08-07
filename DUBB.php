@@ -119,7 +119,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . '.' . DIRECTORY_SEPARATOR
  *
  * 
  * @author	Stijn Leenknegt	<stijnleenknegt@gmail.com>
- * @version	1.4
+ * @version	1.4.1
  * @package DUBB
  */
 class DUBB
@@ -226,7 +226,8 @@ class DUBB
 	 */
 	public static function isRegisteredTag($tag , $amountParams)
 	{
-		return array_key_exists($tag , self::$_tags) && self::$_tags[$tag] == $amountParams;
+		return array_key_exists($tag , self::$_tags) && 
+                ((is_array(self::$_tags[$tag]) && in_array($amountParams , self::$_tags[$tag])) || (self::$_tags[$tag] == $amountParams));
 	}
 
 
